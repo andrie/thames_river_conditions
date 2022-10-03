@@ -31,8 +31,8 @@ jobs:
           to: html # If set, it will be equivalent to `quarto render --to html`
           path: thames-river-levels.qmd # By default, the current working dir is used i.e `quarto render .`
 
-      - name: Publish to GitHub Pages (and render)
+      - name: "Publish to quarto-pub"
         uses: quarto-dev/quarto-actions/publish@v2
         with:
-          path: thames-river-levels.html # By default, the current working dir is used i.e `quarto render .`
+          path: thames-river-levels.qmd # By default, the current working dir is used i.e `quarto render .`
           target: quarto-pub
