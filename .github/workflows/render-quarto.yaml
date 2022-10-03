@@ -2,6 +2,10 @@
 on:
   push:
   pull_request:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Run at 6am every day
+    - cron:  '* 5 * * *'
 
 name: Render and deploy Quarto files
 
@@ -24,12 +28,6 @@ jobs:
 
       - name: "Install Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: "Render Quarto Project"
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: html # If set, it will be equivalent to `quarto render --to html`
-          path: thames-river-levels.qmd # By default, the current working dir is used i.e `quarto render .`
 
       - name: "Publish to quarto-pub"
         uses: quarto-dev/quarto-actions/publish@v2
