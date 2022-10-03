@@ -1,0 +1,51 @@
+---
+title: "River Thames conditions at Hampton Court"
+date: now
+date-format: "YYYY-MM-DD HH:mm:ssZ"
+toc: true
+echo: false
+jupyter: python3
+---
+
+```{python}
+#| echo: false
+import hcc as hcc
+from itables import init_notebook_mode, show
+init_notebook_mode(all_interactive=True)
+
+```
+
+## Times of sunrise and sunset
+
+```{python}
+hcc.sunrise_times()
+```
+
+
+## River conditions
+
+```{python}
+import hcc
+df = hcc.scrape_conditions()
+show(df,  search={"search": "Local"})
+```
+
+
+## Flow rate at Kingston
+
+```{python}
+hcc.plot_thames_level("Kingston", parameter = "flow")
+```
+
+## Water level at Molesey Lock
+
+```{python}
+hcc.plot_thames_level("Molesey Lock")
+```
+
+## River closures
+
+```{python}
+df = hcc.scrape_river_closures()
+show(df,  search={"search": "Local"})
+```

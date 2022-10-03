@@ -1,0 +1,11 @@
+venv/
+venv_old/
+*_files/
+.env
+old/
+*.html
+*.log
+*.ipynb
+test.qmd
+*.pyc
+.vscode/settings.json
