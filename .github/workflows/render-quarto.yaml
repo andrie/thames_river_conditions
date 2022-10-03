@@ -1,10 +1,9 @@
-steps:
-
 # .github/workflows/render-and-publish.yaml
-name: Render and deploy Quarto files
 on:
   push:
   pull_request:
+
+name: Render and deploy Quarto files
 
 jobs:
   quarto-render-and-deploy:
