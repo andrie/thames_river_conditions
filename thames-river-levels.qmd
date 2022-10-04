@@ -62,7 +62,7 @@ Negative flow rate means that the incoming tide is high and river flow is actual
 ## Water level at Sunbury Lock
 
 ```{python}
-hcc.plot_thames_level("Sunbury")
+hcc.plot_thames_level("Sunbury", position = "downstream")
 ```
 
 ::: {.column-margin}
