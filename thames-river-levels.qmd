@@ -53,7 +53,7 @@ hcc.plot_thames_level("Kingston", parameter = "flow")
 ::: {.column-margin}
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
-A flow rate of **100 cumecs** is typically when the *yellow boards** appear, and **140 cumecs** is when the **red boards** appear.
+A flow rate of **100 cumecs** is typically when the **yellow boards** appear, and **140 cumecs** is when the **red boards** appear.
 
 Negative flow rate means that the incoming tide is high and river flow is actually upstream.
 :::
@@ -80,7 +80,7 @@ What does the Sunbury lock water level mean at the club house?
 :::
 
 
-## River closures
+## River closures and restrictions
 
 ::: {.column-margin}
 River closure information is collated from <https://www.gov.uk/guidance/river-thames-restrictions-and-closures> and is not guaranteed to be accurate or up-to-date.
