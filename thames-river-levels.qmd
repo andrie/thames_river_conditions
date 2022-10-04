@@ -5,6 +5,12 @@ date-format: "YYYY-MM-DD HH:mm:ssZ"
 toc: true
 echo: false
 jupyter: python3
+reference-location: margin
+format: 
+    html:
+        theme: lumen
+        font-size: 0.8em
+    
 ---
 
 ```{python}
@@ -24,6 +30,13 @@ hcc.sunrise_times()
 
 ## River conditions
 
+
+::: {.column-margin}
+This information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 10:00am each day. 
+
+The data is provided by the Environment Agency and is subject to their terms and conditions. The data is provided for information only and is not guaranteed to be accurate. The Environment Agency does not accept any liability for any loss or damage arising from the use of this data.
+:::
+
 ```{python}
 import hcc
 df = hcc.scrape_conditions()
@@ -37,13 +50,41 @@ show(df,  search={"search": "Local"})
 hcc.plot_thames_level("Kingston", parameter = "flow")
 ```
 
-## Water level at Molesey Lock
+::: {.column-margin}
+Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
+
+A flow rate of **100 cumecs** is typically when the *yellow boards** appear, and **140 cumecs** is when the **red boards** appear.
+
+Negative flow rate means that the incoming tide is high and river flow is actually upstream.
+:::
+
+
+## Water level at Sunbury Lock
 
 ```{python}
-hcc.plot_thames_level("Molesey Lock")
+hcc.plot_thames_level("Sunbury")
 ```
 
+::: {.column-margin}
+What does the Sunbury lock water level mean at the club house?
+
+5.05m : water lapping over step to club house, canoe drying area under water (all time peak reached on 20014-11-02)
+
+4.95m : car park under water, canoe drying area a bit wet
+
+4.50m : car park half under water, canoe drying area high and dry
+
+4.00m : car park dry but river still in flood
+
+3.19m : flooding possible in Sunbury
+:::
+
+
 ## River closures
+
+::: {.column-margin}
+River closure information is collated from <https://www.gov.uk/guidance/river-thames-restrictions-and-closures> and is not guaranteed to be accurate or up-to-date.
+:::
 
 ```{python}
 df = hcc.scrape_river_closures()
