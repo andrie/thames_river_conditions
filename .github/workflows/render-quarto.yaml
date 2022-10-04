@@ -5,7 +5,7 @@ on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     # Run at 6am every day
-    - cron:  '* 5 * * *'
+    - cron:  '0 5 * * *'
 
 name: Render and deploy Quarto files
 
