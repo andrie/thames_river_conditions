@@ -38,8 +38,8 @@ def time_hash(seconds=3600):
 
 
 # wrapper around the EA get_stations function
-def get_thames_levels():
-    return get_ea_rivers("River Thames", "level", time_hash=time_hash())
+def get_thames_levels(river_name = "River Thames"):
+    return get_ea_rivers(river_name, "level", time_hash=time_hash())
 
 
 # wrapper around the EA get_stations function
@@ -48,20 +48,20 @@ def get_thames_flow():
 
 
 # Lookup a station name from a search string
-def lookup_thames_station_name(station_search, measure = "level"):
-    stations = get_thames_levels()
+def lookup_thames_station_name(station_search, river_name = "River Thames"):
+    stations = get_thames_levels(river_name)
     idx = stations["label"].str.contains(station_search, na = False)
     station_name = stations.loc[idx, ["label"]].values[0][0]
     return station_name
 
 # Lookup the measure URL from the station name
-def lookup_thames_station_url(station_name):
-    stations = get_thames_levels()
+def lookup_thames_station_url(station_name, river_name = "River Thames"):
+    stations = get_thames_levels(river_name)
     idx = stations["label"].str.contains(station_name, na = False)
     return stations.loc[idx, "@id"].values[0]
 
 # Create a plotly plot of eitehr levels or flow
-def plot_thames_level(station_search, position = "upstream", parameter = "level"):
+def plot_thames_level(station_search, position = "upstream", parameter = "level", river_name = "River Thames"):
     """ Searches for the station name, then plot the upstream or downstream flow
     Arguments:
         station_search {str} -- Name of the station to search for
@@ -76,8 +76,8 @@ def plot_thames_level(station_search, position = "upstream", parameter = "level"
     else:
         measure = 1
     
-    station_name = lookup_thames_station_name(station_search)
-    found = lookup_thames_station_url(station_name)
+    station_name = lookup_thames_station_name(station_search, river_name = river_name)
+    found = lookup_thames_station_url(station_name, river_name = river_name)
     measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
 
     s1 = measures["@id"].values[measure]

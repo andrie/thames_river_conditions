@@ -59,7 +59,11 @@ Negative flow rate means that the incoming tide is high and river flow is actual
 :::
 
 
-## Water level at Sunbury Lock
+## Water levels
+
+::: {.panel-tabset}
+
+### Sunbury Lock
 
 ```{python}
 hcc.plot_thames_level("Sunbury", position = "downstream")
@@ -68,7 +72,7 @@ hcc.plot_thames_level("Sunbury", position = "downstream")
 ::: {.column-margin}
 What does the Sunbury lock water level mean at the club house?
 
-5.05m : water lapping over step to club house, canoe drying area under water (all time peak reached on 20014-11-02)
+5.05m : water lapping over step to club house, canoe drying area under water (all time peak reached on 2014-11-02)
 
 4.95m : car park under water, canoe drying area a bit wet
 
@@ -79,6 +83,14 @@ What does the Sunbury lock water level mean at the club house?
 3.19m : flooding possible in Sunbury
 :::
 
+### Richmond Lock
+
+
+```{python}
+hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
+```
+
+:::
 
 ## River closures and restrictions
 
