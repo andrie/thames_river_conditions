@@ -92,7 +92,7 @@ hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
 
 ### Richmond lock tide times
 
-<script type="text/javascript" src="http://tidetimes.co.uk/widget?name=Richmond Lock&days=3"></script>
+<script type="text/javascript" src="https://tidetimes.co.uk/widget?name=Richmond Lock&days=3"></script>
 
 :::
 
