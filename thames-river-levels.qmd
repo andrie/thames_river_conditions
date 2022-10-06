@@ -90,6 +90,10 @@ What does the Sunbury lock water level mean at the club house?
 hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
 ```
 
+### Richmond lock tide times
+
+<script type="text/javascript" src="http://tidetimes.co.uk/widget?name=Richmond Lock&days=3"></script>
+
 :::
 
 ## River closures and restrictions
