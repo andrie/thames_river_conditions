@@ -177,31 +177,39 @@ def scrape_river_closures():
 
 
 def scrape_conditions():
-    url = 'http://riverconditions.environment-agency.gov.uk/'
-    dfs = pd.read_html(url)
-    df = pd.concat(dfs)
-
     import re
-    reach = df['Reach'].values
+    url = 'http://riverconditions.environment-agency.gov.uk/'
 
-    # use a regular expression to extract the reach name
-    fm = []
-    to = []
-    for r in reach:
-        match = re.search('^(.*?) to (.*)$', r)
-        if match:
-            fm.append(match.group(1))
-            to.append(match.group(2))
-        else:
-            fm.append(r)
-            to.append('')
+    try:
+        dfs = pd.read_html(url)
+        success = True
+    except:
+        success = False
 
-    df['From'] = fm
-    df['To'] = to
-    df['Local'] = find_local(df['From'].values)
-    # print(df['Local'])
-    return df[['From', 'To', 'Local', 'Current conditions']]
+    if success:
+        df = pd.concat(dfs)
 
+        reach = df['Reach'].values
+
+        # use a regular expression to extract the reach name
+        fm = []
+        to = []
+        for r in reach:
+            match = re.search('^(.*?) to (.*)$', r)
+            if match:
+                fm.append(match.group(1))
+                to.append(match.group(2))
+            else:
+                fm.append(r)
+                to.append('')
+
+        df['From'] = fm
+        df['To'] = to
+        df['Local'] = find_local(df['From'].values)
+        # print(df['Local'])
+        return df[['From', 'To', 'Local', 'Current conditions']]
+    else:
+        return pd.DataFrame({"Result": ["No data available"]})
 
 
 def sunrise_times():
