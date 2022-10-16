@@ -38,7 +38,7 @@ The data is provided by the Environment Agency and is subject to their terms and
 :::
 
 ```{python}
-import hcc
+import hcc as hcc
 df = hcc.scrape_conditions()
 show(df,  search={"search": "Local"})
 ```
