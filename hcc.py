@@ -102,7 +102,7 @@ def find_local(x):
     local = []
     for r in x:
         # print(r)
-        if re.search("Walton|Molesey|Teddington|Kingston|Sunbury", r):
+        if re.search("Walton|Shepperton|Molesey|Teddington|Kingston|Sunbury", r):
             local.append('Local')
         else:
             local.append('No')

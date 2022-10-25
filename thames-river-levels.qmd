@@ -81,6 +81,11 @@ What does the Sunbury lock water level mean at the club house?
 4.00m : car park dry but river still in flood
 
 3.19m : flooding possible in Sunbury
+
+2.8m  : river flow is strong, roughly 100 cumecs at Kingston, about the level where the yellow boards appear
+
+2.4m  : typical flow rate when river flow is low
+
 :::
 
 ### Richmond Lock
