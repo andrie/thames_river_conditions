@@ -207,7 +207,7 @@ def scrape_conditions():
         df['To'] = to
         df['Local'] = find_local(df['From'].values)
         # print(df['Local'])
-        return df[['From', 'To', 'Local', 'Current conditions']]
+        return df[['From', 'To', 'Current conditions', 'Local']].reset_index(drop=True)
     else:
         return pd.DataFrame({"Result": ["No data available"]})
 
