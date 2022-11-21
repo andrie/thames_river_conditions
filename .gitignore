@@ -6,7 +6,9 @@ old/
 *.html
 *.log
 *.ipynb
+!dev.ipynb
 test.qmd
 *.pyc
 .vscode/settings.json
 /.luarc.json
+.ipynb_checkpoints/*
