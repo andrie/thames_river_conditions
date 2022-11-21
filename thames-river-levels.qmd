@@ -47,7 +47,7 @@ show(df,  search={"search": "Local"})
 ::: {.column-margin}
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
-A flow rate of **100 cumecs** is typically when the **yellow boards** appear, and **140 cumecs** is when the **red boards** appear.
+A flow rate of **100-150 cumecs** seems to be the range when **yellow boards** appear, and higher than **150 cumecs** when the **red boards** appear.
 
 Negative flow rate means that the incoming tide is high and river flow is actually upstream.
 :::
