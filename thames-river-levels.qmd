@@ -32,9 +32,7 @@ hcc.sunrise_times()
 
 
 ::: {.column-margin}
-This information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 10:00am each day. 
-
-The data is provided by the Environment Agency and is subject to their terms and conditions. The data is provided for information only and is not guaranteed to be accurate. The Environment Agency does not accept any liability for any loss or damage arising from the use of this data.
+This river conditions information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 5am every day. 
 :::
 
 ```{python}
@@ -46,10 +44,6 @@ show(df,  search={"search": "Local"})
 
 ## Flow rate at Kingston
 
-```{python}
-hcc.plot_thames_level("Kingston", parameter = "flow")
-```
-
 ::: {.column-margin}
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
@@ -57,6 +51,11 @@ A flow rate of **100 cumecs** is typically when the **yellow boards** appear, an
 
 Negative flow rate means that the incoming tide is high and river flow is actually upstream.
 :::
+
+```{python}
+hcc.plot_thames_level("Kingston", parameter = "flow")
+```
+
 
 
 ## Water levels

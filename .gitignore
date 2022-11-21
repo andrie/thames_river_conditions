@@ -9,3 +9,4 @@ old/
 test.qmd
 *.pyc
 .vscode/settings.json
+/.luarc.json
