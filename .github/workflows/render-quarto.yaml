@@ -36,3 +36,4 @@ jobs:
         with:
           target: quarto-pub
           QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+          path: thames-river-levels.qmd
