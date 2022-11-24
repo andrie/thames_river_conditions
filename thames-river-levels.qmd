@@ -16,7 +16,7 @@ format:
 ```{python}
 #| echo: false
 import hcc as hcc
-from itables import init_notebook_mode, show
+from itables import init_notebook_mode, show, JavascriptFunction
 init_notebook_mode()
 
 ```
@@ -38,7 +38,22 @@ This river conditions information is collated daily from <http://riverconditions
 ```{python}
 import hcc as hcc
 df = hcc.scrape_conditions()
-show(df,  search={"search": "Local"})
+show(
+    df,  
+    search={"search": "Local"},
+    columnDefs = [{
+        "targets": "_all",
+        "createdCell": JavascriptFunction(
+            """
+            function (td, cellData, rowData, row, col) {
+                if (cellData == "Caution strong stream") {$(td).css('background-color', 'red').css('color', 'white');}
+                if (cellData == "Caution stream increasing") {$(td).css('background-color', '#FFE010');}
+                if (cellData == "Caution stream decreasing") {$(td).css('background-color', '#FFE010');}
+                }
+            """
+            )
+        }]
+    )
 ```
 
 
