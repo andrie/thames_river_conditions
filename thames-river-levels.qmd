@@ -57,21 +57,35 @@ show(
 ```
 
 
-## Flow rate at Kingston
+## River flow rate
 
 ::: {.column-margin}
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
-A flow rate of **100-150 cumecs** seems to be the range when **yellow boards** appear, and higher than **150 cumecs** when the **red boards** appear.
+A flow rate of **100-150 cumecs** at Kingston seems to be the range when **yellow boards** appear, and higher than **150 cumecs** when the **red boards** appear.
 
-Negative flow rate means that the incoming tide is high and river flow is actually upstream.
+Negative flow rate at Kingston means that the incoming tide is high and river flow is actually upstream.
 :::
+
+
+::: {.panel-tabset}
+
+### Kingston
 
 ```{python}
 hcc.plot_thames_level("Kingston", parameter = "flow")
 ```
 
 
+### Walton
+
+```{python}
+hcc.plot_thames_level("Walton", parameter = "flow")
+```
+
+
+
+:::
 
 ## Water levels
 
