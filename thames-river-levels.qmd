@@ -62,7 +62,7 @@ show(
 ::: {.column-margin}
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
-A flow rate of about **100 umecs** at Walton seems to be the range when **yellow caution** (stream increasing) appear, and higher than **150 cumecs** when the **red caution** (strong stream) appear.
+A flow rate of about **100 cumecs** at Walton seems to be the range when **yellow caution** (stream increasing) appear, and higher than **150 cumecs** when the **red caution** (strong stream) appear.
 
 Note that a negative flow rate at Kingston means that the incoming tide is high and river flow is actually upstream.
 :::
