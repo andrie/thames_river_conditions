@@ -179,6 +179,7 @@ def scrape_river_closures():
 def scrape_conditions():
     import re
     url = 'http://riverconditions.environment-agency.gov.uk/'
+    url = 'https://www.gov.uk/guidance/river-thames-current-river-conditions'
 
     try:
         dfs = pd.read_html(url)
@@ -187,7 +188,9 @@ def scrape_conditions():
         success = False
 
     if success:
+        dfs = dfs[0:3]
         df = pd.concat(dfs)
+        # return(df)
 
         reach = df['Reach'].values
 
