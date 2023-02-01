@@ -10,7 +10,6 @@ format:
     html:
         theme: lumen
         font-size: 0.8em
-    
 ---
 
 ```{python}
@@ -27,12 +26,10 @@ init_notebook_mode()
 hcc.sunrise_times()
 ```
 
-
 ## River conditions
 
-
-::: {.column-margin}
-This river conditions information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 5am every day. 
+::: column-margin
+This river conditions information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 5am every day.
 :::
 
 ```{python}
@@ -56,19 +53,17 @@ show(
     )
 ```
 
-
 ## River flow rate
 
-::: {.column-margin}
+::: column-margin
 Flow rate is the volume of water passing a point in a river per unit time. It is measured in cubic metres per second (m3/s), also known as Cumecs.
 
 A flow rate of about **100 cumecs** at Walton seems to be the range when **yellow caution** (stream increasing) appear, and higher than **150 cumecs** when the **red caution** (strong stream) appear.
 :::
 
-
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Walton
+
 ```{python}
 hcc.plot_thames_level("Walton", parameter = "flow")
 ```
@@ -78,20 +73,18 @@ hcc.plot_thames_level("Walton", parameter = "flow")
 ```{python}
 hcc.plot_thames_level("Kingston", parameter = "flow")
 ```
-
 :::
 
 ## Water levels
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Sunbury Lock
 
 ```{python}
 hcc.plot_thames_level("Sunbury", position = "downstream")
 ```
 
-::: {.column-margin}
+::: column-margin
 What does the Sunbury lock water level mean at the club house?
 
 5.05m : water lapping over step to club house, canoe drying area under water (all time peak reached on 2014-11-02)
@@ -104,14 +97,12 @@ What does the Sunbury lock water level mean at the club house?
 
 3.19m : flooding possible in Sunbury
 
-2.8m  : river flow is strong, roughly 100 cumecs at Kingston, about the level where the yellow boards appear
+2.8m : river flow is strong, roughly 100 cumecs at Kingston, about the level where the yellow boards appear
 
-2.4m  : typical flow rate when river flow is low
-
+2.4m : typical level when river flow is low
 :::
 
 ### Richmond Lock
-
 
 ```{python}
 hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
@@ -119,13 +110,14 @@ hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
 
 ### Richmond lock tide times
 
+```{=html}
 <script type="text/javascript" src="https://tidetimes.co.uk/widget?name=Richmond Lock&days=3"></script>
-
+```
 :::
 
 ## River closures and restrictions
 
-::: {.column-margin}
+::: column-margin
 River closure information is collated from <https://www.gov.uk/guidance/river-thames-restrictions-and-closures> and is not guaranteed to be accurate or up-to-date.
 :::
 
