@@ -152,7 +152,10 @@ def scrape_river_closures():
 
     # insert column of links into pandas dataframe
     for i in range(len(tbls)):
-        pd_dfs[i]['link'] = extract_links(tbls[i])
+        new_link = extract_links(tbls[i])
+        if len(new_link) == 0:
+            new_link = ''
+        pd_dfs[i]['link'] = new_link
 
     # concatenate all dataframes into one
     df = pd.concat(pd_dfs)
@@ -167,7 +170,10 @@ def scrape_river_closures():
         end = event[colon:]
         # link = df['link'].values[i]
         link = el
-        links.append(f"<a href='{link}' target='_blank'>{beg}</a>{end}")
+        if link != '':
+            links.append(f"<a href='{link}' target='_blank'>{beg}</a>{end}")
+        else:
+            links.append(f"{beg} {end}")
     
     df['Event'] = links
     df['Local'] = find_local(df['Where'].values)
