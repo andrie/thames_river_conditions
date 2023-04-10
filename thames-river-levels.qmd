@@ -43,9 +43,9 @@ show(
         "createdCell": JavascriptFunction(
             """
             function (td, cellData, rowData, row, col) {
-                if (cellData == "Caution strong stream") {$(td).css('background-color', 'red').css('color', 'white');}
-                if (cellData == "Caution stream increasing") {$(td).css('background-color', '#FFE010');}
-                if (cellData == "Caution stream decreasing") {$(td).css('background-color', '#FFE010');}
+                if (cellData == "Red Caution strong stream warning") {$(td).css('background-color', 'red').css('color', 'white');}
+                if (cellData == "Yellow Caution stream increasing") {$(td).css('background-color', '#FFE010');}
+                if (cellData == "Yellow Caution stream decreasing") {$(td).css('background-color', '#FFE010');}
                 }
             """
             )
