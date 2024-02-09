@@ -33,7 +33,7 @@ def get_ea_measures(station, parameter = "level", time_hash=None):
 
 
 def time_hash(seconds=3600):
-    """Return the same value withing `seconds` time period"""
+    """Return the same value within `seconds` time period"""
     return round(time.time() / seconds)
 
 
@@ -48,7 +48,12 @@ def get_thames_flow():
 
 
 # Lookup a station name from a search string
+
+
+
 def lookup_thames_station_name(station_search, river_name = "River Thames"):
+    """Look up a station name from a search string
+    """
     stations = get_thames_levels(river_name)
     idx = stations["label"].str.contains(station_search, na = False)
     station_name = stations.loc[idx, ["label"]].values[0][0]
@@ -60,15 +65,50 @@ def lookup_thames_station_url(station_name, river_name = "River Thames"):
     idx = stations["label"].str.contains(station_name, na = False)
     return stations.loc[idx, "@id"].values[0]
 
-# Create a plotly plot of eitehr levels or flow
+
+def get_rates(station_search, position = "upstream", parameter = "level", river_name = "River Thames", since = None, limit = None):
+    """ Searches for the station name, then plot the upstream or downstream flow
+
+    Arguments:
+
+        station_search {str} -- Name of the station to search for
+
+        position {str} -- Either "upstream" or "downstream"
+
+        paramater {str} -- Either "level" or "flow"
+
+    Returns:
+        Plotly figure object
+    """
+
+    if position == "upstream":
+        measure = 0
+    else:
+        measure = 1
+    
+    station_name = lookup_thames_station_name(station_search, river_name = river_name)
+    found = lookup_thames_station_url(station_name, river_name = river_name)
+    measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
+
+    s1 = measures["@id"].values[measure]
+    s1msr = ea_rivers.get_readings_for_measure(s1, limit = limit, since = since)
+    return s1msr
+
+
+# Create a plotly plot of either levels or flow
 def plot_thames_level(station_search, position = "upstream", parameter = "level", river_name = "River Thames"):
     """ Searches for the station name, then plot the upstream or downstream flow
+
     Arguments:
+
         station_search {str} -- Name of the station to search for
+
         position {str} -- Either "upstream" or "downstream"
+
         paramater {str} -- Either "level" or "flow"
+
     Returns:
-        plotly figure -- Plotly figure object
+        Plotly figure object
     """
 
     if position == "upstream":
@@ -183,6 +223,9 @@ def scrape_river_closures():
 
 
 def scrape_conditions():
+    """
+    Scrape conditions from environment agency and gov.uk websites
+    """
     import re
     url = 'http://riverconditions.environment-agency.gov.uk/'
     url = 'https://www.gov.uk/guidance/river-thames-current-river-conditions'

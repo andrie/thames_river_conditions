@@ -29,11 +29,18 @@ jobs:
       - name: "Install Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: 1.2.313
+          version: 1.4.504
 
-      - name: "Publish to quarto-pub"
+      - name: "Publish full report to quarto-pub"
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: quarto-pub
           QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
           path: thames-river-levels.qmd
+
+      - name: "Publish simplified report to quarto-pub"
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: quarto-pub
+          QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+          path: simplified.qmd

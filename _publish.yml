@@ -1,4 +1,8 @@
 - source: thames-river-levels.qmd
   quarto-pub:
     - id: d9f840d7-5069-4189-af07-9475ff770f05
-      url: 'https://quartopub.com/sites/andrie/river-thames-conditions-at-hampton-court'
+      url: 'https://andrie.quarto.pub/river-thames-conditions-at-hampton-court'
+- source: simplified.qmd
+  quarto-pub:
+    - id: 3c3114b9-0b4d-411d-8368-1da84714b801
+      url: 'https://andrie.quarto.pub/simplified-river-conditions'

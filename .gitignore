@@ -1,4 +1,4 @@
-venv/
+.venv/
 venv_old/
 *_files/
 .env
@@ -12,3 +12,8 @@ test.qmd
 .vscode/settings.json
 /.luarc.json
 .ipynb_checkpoints/*
+cache/
+
+tests/
+metoffice/
+dev.py
