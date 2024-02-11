@@ -16,3 +16,4 @@ ipyleaflet
 osmnx
 matplotlib
 great-tables
+sparklines
