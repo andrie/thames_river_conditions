@@ -29,7 +29,7 @@ hcc.sunrise_times()
 ## River conditions
 
 ::: column-margin
-This river conditions information is collated daily from <http://riverconditions.environment-agency.gov.uk/> and is updated at 5am every day.
+This river conditions information is collated daily from <https://www.gov.uk/guidance/river-thames-current-river-conditions> and is updated at 5am every day.
 :::
 
 ```{python}
@@ -61,10 +61,27 @@ Flow rate is the volume of water passing a point in a river per unit time. It is
 A flow rate of about **100 cumecs** at Walton seems to be the range when **yellow caution** (stream increasing) appear, and higher than **150 cumecs** when the **red caution** (strong stream) appear.
 :::
 
+```{=HTML}
+<!-- adapted from https://stackoverflow.com/a/62572610/602276 -->
+<script type="text/javascript" charset="utf-8">
+$(document).on('shown.bs.tab', function (event) {
+    console.log("Tab shown");
+    var doc = $(".tab-pane.active .plotly-graph-div");
+    for (var i = 0; i < doc.length; i++) {
+        _Plotly.relayout(doc[i], {autosize: true});
+    }
+});
+</script>
+```
+
+
+
 ::: panel-tabset
 ### Walton
 
 ```{python}
+# from importlib import reload
+# reload(hcc)
 hcc.plot_thames_level("Walton", parameter = "flow")
 ```
 

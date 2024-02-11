@@ -66,7 +66,7 @@ def lookup_thames_station_url(station_name, river_name = "River Thames"):
     return stations.loc[idx, "@id"].values[0]
 
 
-def get_rates(station_search, position = "upstream", parameter = "level", river_name = "River Thames", since = None, limit = None):
+def get_thames_metric(station_search, position = "upstream", parameter = "level", river_name = "River Thames", since = None, limit = None):
     """ Searches for the station name, then plot the upstream or downstream flow
 
     Arguments:
@@ -78,7 +78,7 @@ def get_rates(station_search, position = "upstream", parameter = "level", river_
         paramater {str} -- Either "level" or "flow"
 
     Returns:
-        Plotly figure object
+        Pandas dataframe
     """
 
     if position == "upstream":
@@ -96,7 +96,9 @@ def get_rates(station_search, position = "upstream", parameter = "level", river_
 
 
 # Create a plotly plot of either levels or flow
-def plot_thames_level(station_search, position = "upstream", parameter = "level", river_name = "River Thames"):
+def plot_thames_level(station_search, position = "upstream", parameter = "level", 
+    river_name = "River Thames",
+    plot_type = "plotly"):
     """ Searches for the station name, then plot the upstream or downstream flow
 
     Arguments:
@@ -111,17 +113,21 @@ def plot_thames_level(station_search, position = "upstream", parameter = "level"
         Plotly figure object
     """
 
-    if position == "upstream":
-        measure = 0
-    else:
-        measure = 1
+    # if position == "upstream":
+    #     measure = 0
+    # else:
+    #     measure = 1
     
     station_name = lookup_thames_station_name(station_search, river_name = river_name)
-    found = lookup_thames_station_url(station_name, river_name = river_name)
-    measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
+    # found = lookup_thames_station_url(station_name, river_name = river_name)
+    # measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
 
-    s1 = measures["@id"].values[measure]
-    s1msr = ea_rivers.get_readings_for_measure(s1)
+    # s1 = measures["@id"].values[measure]
+    # s1msr = ea_rivers.get_readings_for_measure(s1)
+
+
+    s1msr = get_thames_metric(station_name, position = position, 
+        parameter = parameter, river_name = river_name)
 
     if parameter == "level":
         title = f"{station_name} {position} river level"
@@ -131,11 +137,49 @@ def plot_thames_level(station_search, position = "upstream", parameter = "level"
         value_label = "River flow (m3/s)"
 
     # Plot the river level
-    return px.line(
-        s1msr, x="dateTime", y="value", 
-        title = title,
-        labels = {"dateTime": "Date", "value": f"{value_label}"}
-    )
+    if plot_type == "plotly":
+        fig = px.line(
+            s1msr, x="dateTime", y="value", 
+            title = title,
+            labels = {"dateTime": "Date", "value": f"{value_label}"}
+        )
+        fig.update_layout(
+            autosize=True,
+            # width=500,
+            # height=500,
+        )
+
+        return fig
+    else:
+        # create plot using matplotlib
+        # convert the dateTime column to a datetime object
+        s1msr["dateTime"] = pd.to_datetime(s1msr["dateTime"])
+        import matplotlib.pyplot as plt
+        # create plot using matplotlib
+        fig, ax = plt.subplots()
+        ax.plot(s1msr["dateTime"], s1msr["value"])
+        ax.set_title(title)
+        ax.set_xlabel("Date")
+        ax.set_ylabel(value_label)
+        # ax.locator_params(axis='x', nbins=6)
+        ax.xaxis.set_major_locator(plt.MaxNLocator(3))
+        return ax
+
+        
+
+
+
+
+
+        return fig
+
+        # fig = plt.figure()
+        # fig = plt.plot(s1msr["dateTime"], s1msr["value"])
+        # fig.set_title(title)
+        # fig.set_xlabel("Date")
+        # fig.set_ylabel(value_label)
+        # fig.locator_params(axis='x', nbins=6)
+        # fig.xaxis.set_major_locator(plt.MaxNLocator(3))
 
 
 def find_local(x):
@@ -227,7 +271,7 @@ def scrape_conditions():
     Scrape conditions from environment agency and gov.uk websites
     """
     import re
-    url = 'http://riverconditions.environment-agency.gov.uk/'
+    # url = 'http://riverconditions.environment-agency.gov.uk/'
     url = 'https://www.gov.uk/guidance/river-thames-current-river-conditions'
 
     try:

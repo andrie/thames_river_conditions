@@ -69,8 +69,8 @@ seven = seven.date()
 # extract the date from the seven days ago datetime object
 
 
-walton   = hcc.get_rates("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
-kingston = hcc.get_rates("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+walton   = hcc.get_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+kingston = hcc.get_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
 
 
 import pandas as pd
