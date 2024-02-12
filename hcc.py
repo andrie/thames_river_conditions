@@ -98,6 +98,8 @@ def get_thames_metric(station_search, position = "upstream", parameter = "level"
 # Create a plotly plot of either levels or flow
 def plot_thames_level(station_search, position = "upstream", parameter = "level", 
     river_name = "River Thames",
+    since = None,
+    limit = None,
     plot_type = "plotly"):
     """ Searches for the station name, then plot the upstream or downstream flow
 
@@ -127,7 +129,7 @@ def plot_thames_level(station_search, position = "upstream", parameter = "level"
 
 
     s1msr = get_thames_metric(station_name, position = position, 
-        parameter = parameter, river_name = river_name)
+        parameter = parameter, river_name = river_name, since = since, limit = limit)
 
     if parameter == "level":
         title = f"{station_name} {position} river level"

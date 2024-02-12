@@ -62,6 +62,7 @@ A flow rate of about **100 cumecs** at Walton seems to be the range when **yello
 :::
 
 ```{=HTML}
+<!-- Force plotly to recompute layout if a new panel tab is active -->
 <!-- adapted from https://stackoverflow.com/a/62572610/602276 -->
 <script type="text/javascript" charset="utf-8">
 $(document).on('shown.bs.tab', function (event) {
@@ -82,13 +83,19 @@ $(document).on('shown.bs.tab', function (event) {
 ```{python}
 # from importlib import reload
 # reload(hcc)
-hcc.plot_thames_level("Walton", parameter = "flow")
+# compute today - 7 days
+from datetime import datetime, timedelta
+today = datetime.now()
+seven = today - timedelta(days = 7)
+seven = seven.date()
+
+hcc.plot_thames_level("Walton", parameter = "flow", since = seven)
 ```
 
 ### Kingston
 
 ```{python}
-hcc.plot_thames_level("Kingston", parameter = "flow")
+hcc.plot_thames_level("Kingston", parameter = "flow", since = seven)
 ```
 :::
 
@@ -98,7 +105,7 @@ hcc.plot_thames_level("Kingston", parameter = "flow")
 ### Sunbury Lock
 
 ```{python}
-hcc.plot_thames_level("Sunbury", position = "downstream")
+hcc.plot_thames_level("Sunbury", position = "downstream", since = seven)
 ```
 
 ::: column-margin
@@ -119,10 +126,21 @@ What does the Sunbury lock water level mean at the club house?
 2.4m : typical level when river flow is low
 :::
 
+### Molesey Lock
+
+```{python}
+# from importlib import reload
+# import hcc
+# reload(hcc)
+# hcc.lookup_thames_station_name("Molesey Lock")
+
+hcc.plot_thames_level("Molesey Lock", position = "downstream", since = seven)
+```
+
 ### Richmond Lock
 
 ```{python}
-hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
+hcc.plot_thames_level("Richmond", river_name = "Thames Tideway", since = seven)
 ```
 
 ### Richmond lock tide times
