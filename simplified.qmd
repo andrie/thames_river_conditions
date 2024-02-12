@@ -1,7 +1,7 @@
 ---
-title: "River conditions"
-date: now
-date-format: "YYYY-MM-DD HH:mm:ssZ"
+# title: "River conditions"
+# date: now
+# date-format: "YYYY-MM-DD HH:mm:ssZ"
 toc: false
 echo: false
 jupyter: python3
@@ -69,8 +69,8 @@ seven = seven.date()
 # extract the date from the seven days ago datetime object
 
 
-walton   = hcc.get_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
-kingston = hcc.get_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+walton   = hcc.get_thames_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+kingston = hcc.get_thames_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
 
 
 import pandas as pd
@@ -108,6 +108,12 @@ trend = [item for sublist in history for item in sublist]
 # bind trend and flow to dat
 dat["Latest flow (cumecs)"] = flow
 dat["Trend"] = trend
+
+import datetime
+now = datetime.datetime.now()
+now = now.strftime("%Y-%m-%d %H:%M:%S")
+updated = "Last updated at " + now
+
 (
     gt.GT(dat)
     .tab_style(
@@ -119,5 +125,12 @@ dat["Trend"] = trend
         locations=loc.body(columns="Current conditions", rows=yellows)
     )
     .fmt_integer(columns="Latest flow (cumecs)")
+    .tab_header(
+        title = "Local river conditions"
+    )
+    .tab_source_note(
+        source_note = updated
+    )
 )
 ```
+
