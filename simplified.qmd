@@ -107,7 +107,7 @@ trend = [item for sublist in history for item in sublist]
 
 # bind trend and flow to dat
 dat["Latest flow (cumecs)"] = flow
-dat["Trend"] = trend
+dat["Trend (7 days)"] = trend
 
 import datetime
 now = datetime.datetime.now()

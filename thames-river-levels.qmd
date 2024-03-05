@@ -29,7 +29,7 @@ hcc.sunrise_times()
 ## River conditions
 
 ::: column-margin
-This river conditions information is collated daily from <https://www.gov.uk/guidance/river-thames-current-river-conditions> and is updated at 5am every day.
+This river conditions information is from <https://www.gov.uk/guidance/river-thames-current-river-conditions> and gets updated at 5am every day.
 :::
 
 ```{python}
