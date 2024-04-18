@@ -34,8 +34,11 @@ def get_api_key() -> str:
         pass
     
     if api_key is None:
-        vars = dotenv.dotenv_values('.env')
-        api_key = vars[key]
+        try:
+            vars = dotenv.dotenv_values('.env')
+            api_key = vars[key]
+        except KeyError:
+            pass
 
     if api_key is None:
         raise ValueError("MET-OFFICE-API-KEY key not found in environment variable or .env file")
@@ -63,7 +66,7 @@ def get_weather(lat:float, lon:float, type:Optional[str] = None, api_key:Optiona
     if api_key is None:
         api_key = get_api_key()
     
-    resp = _call_weather_api(lat, lon, type)
+    resp = _call_weather_api(lat, lon, type, api_key = api_key)
     df = _decode_response(resp)
     return(df)
 
