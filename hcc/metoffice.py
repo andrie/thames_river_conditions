@@ -7,7 +7,7 @@ import pandas as pd
 import os
 
 # call Met Office weatherhub API to retrieve site specific weather data
-# https://api-metoffice.apiconnect.ibmcloud.com/v0
+# https://data.hub.api.metoffice.gov.uk/sitespecific/v0/point
 
 def _decode_response(response: any) -> pd.DataFrame:
     resp = json.loads(response)
@@ -15,13 +15,17 @@ def _decode_response(response: any) -> pd.DataFrame:
 
     import pandas as pd
     df = pd.DataFrame(fcst)
-    df.head()
+    
+    wc = df['significantWeatherCode'].map(str)
+    df['description'] = [weather_codes[w] for w in wc]
+    df['icon'] = [weather_code_icons[w] for w in wc]
+    # df.head()
     return(df)
 
-    from datetime import datetime
-    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # from datetime import datetime
+    # datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    return(df)
+    # return(df)
 
 def get_api_key() -> str:
     """Get the Met Office API key from the environment variable or .env file"""
@@ -53,14 +57,14 @@ def get_weather(lat:float, lon:float, type:Optional[str] = None, api_key:Optiona
     
     :param: lon: longitude
 
-    :param: type: type of forecast, can be one of "hourly" or "daily". Default is "hourly".
+    :param: type: type of forecast, can be one of "hourly", "three-hourly" or "daily". Default is "hourly".
 
     :param: api_key: Met Office API key. If not provided, it will be read from the environment variable or .env file
     """
     if type is None:
-        type = "hourly"
+        type = "three-hourly"
 
-    if type not in ["hourly", "daily"]:
+    if type not in ["hourly", "three-hourly", "daily"]:
         raise ValueError("type must be one of 'hourly' or 'daily'")
 
     if api_key is None:
