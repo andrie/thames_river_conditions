@@ -29,7 +29,7 @@ def _decode_response(response: any) -> pd.DataFrame:
 
 def get_api_key() -> str:
     """Get the Met Office API key from the environment variable or .env file"""
-    key = 'MET-OFFICE-API-KEY'
+    key = 'MET_OFFICE_API_KEY'
 
     api_key = None
     try:
@@ -155,37 +155,37 @@ weather_codes = {
 }
 
 weather_code_icons = {
-'NA':	'',
-'-1':	'wi-day-rain-mix',
-'0':	'wi-night-clear',
-'1':	'wi-day-sunny',
-'2':	'wi-night-partly-cloudy',
-'3':	'wi-day-cloudy',
-'4':	'',
-'5':	'wi-day-fog',
-'6':	'wi-day-fog',
-'7':	'wi-day-cloudy',
-'8':	'wi-day-sunny-overcast',
-'9':	'wi-night-rain',
-'10':	'wi-day-rain',
-'11':	'wi-day-sleet',
-'12':	'wi-day-rain',
-'13':	'wi-night-storm-showers',
-'14':	'wi-day-storm-showers',
-'15':	'wi-day-showers',
-'16':	'wi-night-sleet-storm',
-'17':	'wi-day-sleet-storm',
-'18':	'wi-day-sleet',
-'19':	'wi-night-hail',
-'20':	'wi-day-hail',
-'21':	'wi-day-hail',
-'22':	'wi-night-snow',
-'23':	'wi-day-snow',
-'24':	'wi-day-snow',
-'25':	'wi-night-snow-thunderstorm',
-'26':	'wi-day-snow-thunderstorm',
-'27':	'wi-day-snow-thunderstorm',
-'28':	'wi-night-thunderstorm',
-'29':	'wi-day-thunderstorm',
-'30':	'wi-day-thunderstorm'
+'NA':	'',                        # Not available
+'-1':	'wi-day-rain-mix',         # Trace rain
+'0':	'wi-night-clear',          # Clear night
+'1':	'wi-day-sunny',            # Sunny day
+'2':	'wi-night-partly-cloudy',  # Partly cloudy (night)
+'3':	'wi-day-cloudy',           # Partly cloudy (day)
+'4':	'',                        # Not used
+'5':	'wi-fog',              # Mist
+'6':	'wi-fog',              # Fog
+'7':	'wi-cloudy',           # Cloudy
+'8':	'wi-cloud',   # Overcast
+'9':	'wi-night-rain',           # Light rain shower (night)
+'10':	'wi-day-rain',             # Light rain shower (day)
+'11':	'wi-day-sleet',            # Drizzle
+'12':	'wi-raindrops',             # Light rain
+'13':	'wi-night-storm-showers',  # Heavy rain shower (night)
+'14':	'wi-day-storm-showers',    # Heavy rain shower (day)
+'15':	'wi-showers',          # Heavy rain
+'16':	'wi-night-sleet-storm',    # Sleet shower (night)
+'17':	'wi-day-sleet-storm',      # Sleet shower (day)
+'18':	'wi-rain',            # Sleet
+'19':	'wi-night-hail',           # Hail shower (night)
+'20':	'wi-day-hail',             # Hail shower (day)
+'21':	'wi-hail',             # Hail
+'22':	'wi-night-snow',           # Light snow shower (night)
+'23':	'wi-day-snow',             # Light snow shower (day)
+'24':	'wi-snow',             # Light snow
+'25':	'wi-night-snow-thunderstorm',  # Heavy snow shower (night)
+'26':	'wi-day-snow-thunderstorm',    # Heavy snow shower (day)
+'27':	'wi-snow',    # Heavy snow
+'28':	'wi-night-thunderstorm',       # Thunder shower (night)
+'29':	'wi-day-thunderstorm',         # Thunder shower (day)
+'30':	'wi-thunderstorm'          # Thunder
 }
