@@ -49,9 +49,12 @@ def scrape_river_closures():
     # insert column of links into pandas dataframe
     for i in range(len(tbls)):
         new_link = extract_links(tbls[i])
-        if len(new_link) == 0:
-            new_link = ''
-        pd_dfs[i]['link'] = new_link
+        # print(f"Table {i} has {len(new_link)} links")
+        # print(f"Table {i} has {len(pd_dfs[i])} rows")
+        if len(new_link) != len(pd_dfs[i]):
+            pd_dfs[i]['link'] = [''] * len(pd_dfs[i])
+        else:
+            pd_dfs[i]['link'] = new_link
 
     # concatenate all dataframes into one
     df = pd.concat(pd_dfs)
