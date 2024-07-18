@@ -85,13 +85,14 @@ def lookup_thames_station_url(station_name, river_name = "River Thames"):
 def get_thames_metric(station_search, position = "upstream", parameter = "level", river_name = "River Thames", since = None, limit = None):
     """ Searches for the station name, then plot the upstream or downstream flow
 
-    Arguments:
+    Parameters
+    ----------
 
         station_search {str} -- Name of the station to search for
 
         position {str} -- Either "upstream" or "downstream"
 
-        paramater {str} -- Either "level" or "flow"
+        parameter {str} -- Either "level" or "flow"
 
     Returns:
         Pandas dataframe
