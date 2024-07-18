@@ -60,13 +60,20 @@ A flow rate of about **100 cumecs** at Walton seems to be the range when **yello
 ### Walton
 
 ```{python}
-hcc.plot_thames_level("Walton", parameter = "flow")
+import datetime
+today = datetime.datetime.now()
+since = today - datetime.timedelta(days = 28)
+since = since.strftime("%Y-%m-%d")
+```
+
+```{python}
+hcc.plot_thames_level("Walton", parameter = "flow", since = since)
 ```
 
 ### Kingston
 
 ```{python}
-hcc.plot_thames_level("Kingston", parameter = "flow")
+hcc.plot_thames_level("Kingston", parameter = "flow", since = since)
 ```
 :::
 
@@ -76,7 +83,7 @@ hcc.plot_thames_level("Kingston", parameter = "flow")
 ### Sunbury Lock
 
 ```{python}
-hcc.plot_thames_level("Sunbury", position = "downstream")
+hcc.plot_thames_level("Sunbury", position = "downstream", since = since)
 ```
 
 ::: column-margin
@@ -100,7 +107,7 @@ What does the Sunbury lock water level mean at the club house?
 ### Richmond Lock
 
 ```{python}
-hcc.plot_thames_level("Richmond", river_name = "Thames Tideway")
+hcc.plot_thames_level("Richmond", river_name = "Thames Tideway", since = since)
 ```
 
 ### Richmond lock tide times
