@@ -16,121 +16,112 @@ format:
 #| echo: false
 
 import hcc
-df = hcc.scrape_conditions()
-
-```
-
-
-```{python}
-import great_tables as gt
 from great_tables import style, loc
 import re
-dat = df[df["From"].isin(["Sunbury Lock", "Molesey Lock"])]
-dat = dat.drop('Local', axis = 1)
-
-# add Locks column with value Walton if the From column is Sunbury Lock
-dat["Locks"] = dat["From"].apply(lambda x: "Shepperton to Molesey" if x == "Sunbury Lock" else "Molesey to Teddington")
-dat["Location"] = ["Walton", "Kingston"]
-dat = dat.loc[:, ["Location", "Locks", "Current conditions"]]
-
-
-
-cond = dat["Current conditions"].values
-
-reds = []
-for i, val in enumerate(cond):
-    match = re.search("^(Red.*)$", val)
-    if match:
-        reds.append(i)
-
-yellows = []
-for i, val in enumerate(cond):
-    match = re.search("^(Yellow.*)$", val)
-    if match:
-        yellows.append(i)
-
-```
-
-
-```{python}
-# hcc.plot_thames_level("Walton", parameter = "flow")
-
-
-import hcc
-from importlib import reload
-reload(hcc)
-
-# compute today - 7 days
-from datetime import datetime, timedelta
-today = datetime.now()
-seven = today - timedelta(days = 7)
-seven = seven.date()
-
-# extract the date from the seven days ago datetime object
-
-
-walton   = hcc.get_thames_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
-kingston = hcc.get_thames_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
-
-
 import pandas as pd
-
-# combine walton and kingston into rows of a pandas dataframe
-stations = ["Walton", "Kingston"]
-flow = [walton.iloc[0]["value"], kingston.iloc[0]["value"]]
-flow = [round(x, 0) for x in flow]
-
-# truncate flow to integer
-# flow = [str(x) for x in flow]
-
-
-```
-
-```{python}
 from sparklines import sparklines
+# import datetime
+from datetime import datetime, timedelta
 
-# extract date from dateTime column of walton, where dataTime is a string
-def make_sparkline(x):
-    x["date"] = x["dateTime"].str.extract(r"(\d{4}-\d{2}-\d{2})")
-    # s = x.groupby("date").mean(skipna = True).reset_index()
+def get_simple_dat():
 
-    s = x.groupby("date")[['value']].mean()
-    return sparklines(s["value"].values)
+    df = hcc.scrape_conditions()
+    dat = df[df["From"].isin(["Sunbury Lock", "Molesey Lock"])]
+    dat = dat.drop('Local', axis = 1)
 
-history = [
-    make_sparkline(walton),
-    make_sparkline(kingston)
-]
-
-trend = [item for sublist in history for item in sublist]
+    # add Locks column with value Walton if the From column is Sunbury Lock
+    dat["Locks"] = dat["From"].apply(lambda x: "Shepperton to Molesey" if x == "Sunbury Lock" else "Molesey to Teddington")
+    dat["Location"] = ["Walton", "Kingston"]
+    dat = dat.loc[:, ["Location", "Locks", "Current conditions"]]
 
 
-# bind trend and flow to dat
-dat["Latest flow (cumecs)"] = flow
-dat["Trend (7 days)"] = trend
 
-import datetime
-now = datetime.datetime.now()
-now = now.strftime("%Y-%m-%d %H:%M:%S")
-updated = "Last updated at " + now
+    cond = dat["Current conditions"].values
+    boards = []
+    for i, val in enumerate(cond):
+        match = re.search("^(Yellow.*)$", val)
+        if match:
+            boards.append("yellow")
+        else:
+            match = re.search("^(Red.*)$", val)
+            if match:
+                boards.append("red")
+            else: 
+                boards.append("")
 
-(
-    gt.GT(dat)
-    .tab_style(
-        style=[style.fill(color="#E21637"), style.text(color="white")],
-        locations=loc.body(columns="Current conditions", rows=reds)
+    dat['Boards'] = boards
+
+    # compute today - 7 days
+    today = datetime.now()
+    seven = today - timedelta(days = 7)
+    seven = seven.date()
+
+    # extract the date from the seven days ago datetime object
+    walton   = hcc.get_thames_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+    kingston = hcc.get_thames_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
+
+    # combine walton and kingston into rows of a pandas dataframe
+    stations = ["Walton", "Kingston"]
+    flow = [walton.iloc[0]["value"], kingston.iloc[0]["value"]]
+    flow = [round(x, 0) for x in flow]
+
+
+    # extract date from dateTime column of walton, where dataTime is a string
+    def make_sparkline(x):
+        x["date"] = x["dateTime"].str.extract(r"(\d{4}-\d{2}-\d{2})")
+        s = x.groupby("date")[['value']].mean()
+        return sparklines(s["value"].values)
+
+    history = [
+        make_sparkline(walton),
+        make_sparkline(kingston)
+    ]
+
+    trend = [item for sublist in history for item in sublist]
+
+    # bind trend and flow to dat
+    dat["Latest flow (cumecs)"] = flow
+    dat["Trend (7 days)"] = trend
+
+    now = datetime.now()
+    now = now.strftime("%Y-%m-%d %H:%M:%S")
+    updated = "Last updated at " + now
+    dat = dat.reset_index(drop = True)
+    
+    return [dat, updated]
+
+
+def simple_dat_gt(dat, updated):
+    import great_tables as gt
+    reds = dat.index[dat["Boards"] == "red"].tolist()
+    # print(reds)
+    # print(len(reds))
+    yellows = dat.index[dat["Boards"] == "yellow"].tolist()
+    # print("yellows")
+    # print(yellows)
+    # print(len(yellows))
+    z = (gt.GT(dat)
+        .tab_style(
+            style=[style.fill(color="#e21637"), style.text(color="white")],
+            locations=loc.body(columns="Current conditions", rows=reds)
+        )
+        .tab_style(
+            style=style.fill(color="#ffcd5e"),
+            locations=loc.body(columns="Current conditions", rows=yellows)
+        )
+        .fmt_integer(columns="Latest flow (cumecs)")
+        .tab_header(
+            title = "Local river conditions"
+        )
+        .tab_source_note(
+            source_note = updated
+        )
     )
-    .tab_style(
-        style=style.fill(color="#FFCD5E"),
-        locations=loc.body(columns="Current conditions", rows=yellows)
-    )
-    .fmt_integer(columns="Latest flow (cumecs)")
-    .tab_header(
-        title = "Local river conditions"
-    )
-    .tab_source_note(
-        source_note = updated
-    )
-)
+    return z
+
+dat, updated = get_simple_dat()
+# print(dat)
+simple_dat_gt(dat, updated)
 ```
+
 
