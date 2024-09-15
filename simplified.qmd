@@ -12,17 +12,8 @@ format:
         font-size: 0.8em
 ---
 
+
 ```{python}
-#| echo: false
-
-import hcc
-from great_tables import style, loc
-import re
-import pandas as pd
-from sparklines import sparklines
-# import datetime
-from datetime import datetime, timedelta
-
 def get_simple_dat():
 
     df = hcc.scrape_conditions()
@@ -60,22 +51,26 @@ def get_simple_dat():
     walton   = hcc.get_thames_metric("Walton",   parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
     kingston = hcc.get_thames_metric("Kingston", parameter = "flow", since = seven).loc[:, ["dateTime", "value"]]
 
-    # combine walton and kingston into rows of a pandas dataframe
-    stations = ["Walton", "Kingston"]
-    flow = [walton.iloc[0]["value"], kingston.iloc[0]["value"]]
-    flow = [round(x, 0) for x in flow]
+    # print(f"walton: {len(walton)}")
+    # print(f"kingston: {len(kingston)}")
 
+    # combine walton and kingston into rows of a pandas dataframe
+    flow = [walton.iloc[0]["value"], kingston.iloc[0]["value"]]
+    flow = [round(x, 0) if x is not None else None for x in flow]
 
     # extract date from dateTime column of walton, where dataTime is a string
     def make_sparkline(x):
+        x = x.dropna(subset=['value'])
+        if len(x) == 0:
+            return ['Not available']
         x["date"] = x["dateTime"].str.extract(r"(\d{4}-\d{2}-\d{2})")
-        s = x.groupby("date")[['value']].mean()
+        s = x.groupby("date")[['value']].mean().reset_index()
         return sparklines(s["value"].values)
 
-    history = [
-        make_sparkline(walton),
-        make_sparkline(kingston)
-    ]
+    sw = make_sparkline(walton)
+    sk = make_sparkline(kingston)
+
+    history = [sw, sk]
 
     trend = [item for sublist in history for item in sublist]
 
@@ -89,8 +84,9 @@ def get_simple_dat():
     dat = dat.reset_index(drop = True)
     
     return [dat, updated]
+```
 
-
+```{python}
 def simple_dat_gt(dat, updated):
     import great_tables as gt
     reds = dat.index[dat["Boards"] == "red"].tolist()
@@ -118,7 +114,26 @@ def simple_dat_gt(dat, updated):
         )
     )
     return z
+```
 
+
+```{python}
+#| echo: false
+
+import hcc
+
+from great_tables import style, loc
+import re
+import pandas as pd
+from sparklines import sparklines
+# import datetime
+from datetime import datetime, timedelta
+
+
+
+```
+
+```{python}
 dat, updated = get_simple_dat()
 # print(dat)
 simple_dat_gt(dat, updated)

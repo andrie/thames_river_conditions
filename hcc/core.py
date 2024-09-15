@@ -5,7 +5,7 @@ import hcc.ea_rivers as ea_rivers
 import plotly.express as px
 from functools import lru_cache
 import time
-
+from datetime import datetime, timedelta
 
 import pandas as pd
 import re
@@ -108,8 +108,25 @@ def get_thames_metric(station_search, position = "upstream", parameter = "level"
     measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
 
     s1 = measures["@id"].values[measure]
-    s1msr = ea_rivers.get_readings_for_measure(s1, limit = limit, since = since)
-    return s1msr
+    dat = ea_rivers.get_readings_for_measure(s1, limit = limit, since = since)
+    # print(dat.ndim)
+    if len(dat) == 0:
+        if since is None:
+            # seven days earlier:
+            since = pd.Timestamp(strftime("%Y-%m-%d %H:%M:%S", gmtime(time() - 7*24*3600)))
+
+        # Get current time
+        now = datetime.now()
+
+        # Generate time intervals of 15 minutes for the last week
+        time_intervals = [now - timedelta(minutes=15 * i) for i in range(int(7 * 24 * 60 / 15))][::-1]
+
+        # Create DataFrame
+        dat = pd.DataFrame({
+            'dateTime': time_intervals,
+            'value': [None] * len(time_intervals)
+        })
+    return dat
 
 
 # Create a plotly plot of either levels or flow
@@ -132,19 +149,7 @@ def plot_thames_level(station_search, position = "upstream", parameter = "level"
         Plotly figure object
     """
 
-    # if position == "upstream":
-    #     measure = 0
-    # else:
-    #     measure = 1
-    
     station_name = lookup_thames_station_name(station_search, river_name = river_name)
-    # found = lookup_thames_station_url(station_name, river_name = river_name)
-    # measures = get_ea_measures(station = found, parameter = parameter).loc[:, ["@id", "label", "notation"]]
-
-    # s1 = measures["@id"].values[measure]
-    # s1msr = ea_rivers.get_readings_for_measure(s1)
-
-
     s1msr = get_thames_metric(station_name, position = position, 
         parameter = parameter, river_name = river_name, since = since, limit = limit)
 
