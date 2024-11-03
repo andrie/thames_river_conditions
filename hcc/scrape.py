@@ -97,7 +97,9 @@ def scrape_conditions():
         success = False
 
     if success:
-        dfs = dfs[0:3]
+        # Correct column names
+        for df in dfs:
+            df.columns = ['Reach', 'Current conditions']
         df = pd.concat(dfs)
         # return(df)
 
